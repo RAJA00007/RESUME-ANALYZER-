@@ -6,17 +6,17 @@ from pdf2image import convert_from_path
 import pytesseract
 import pdfplumber
 
-# Load environment variables
+
 load_dotenv()
 GOOGLE_api = os.getenv("GOOGLE_api")
 if not GOOGLE_api:
     st.error("GOOGLE_api not found in environment variables.")
     st.stop()
 
-# Configure Gemini
+
 genai.configure(api_key=GOOGLE_api)
 
-# PDF text extraction
+
 def extract_text_from_pdf(file_path):
     text = ""
     try:
@@ -30,7 +30,7 @@ def extract_text_from_pdf(file_path):
     except Exception as e:
         print("Text extraction failed:", e)
 
-    # Fallback to OCR
+   
     try:
         images = convert_from_path(file_path)
         for img in images:
@@ -40,7 +40,7 @@ def extract_text_from_pdf(file_path):
 
     return text.strip()
 
-# AI analysis
+
 def analyze_resume(text, job_description=None):
     if not text:
         return "❌ Resume content is empty."
